@@ -126,7 +126,7 @@ class PhibApp:
         self.root.bind('<Control-Return>',
                        lambda event: self.calcular_perimetro())
         self.root.bind('<Alt-F4>', lambda event: self.root.destroy())
-        
+
         # Scroll area
         scroll_container = ttk.Frame(self.tab_perimetro)
         scroll_container.pack(fill="both", expand=True, padx=20, pady=5)
@@ -182,8 +182,8 @@ class PhibApp:
         entry.pack(side="left", padx=5)
 
         # --- NOVA FUNCIONALIDADE: Enter pula para o próximo ---
+        
         entry.bind("<Return>", self.focar_proximo_campo)
-        # ----------------------------------------------------
 
         unidades = ['m', 'km', 'hm', 'dam', 'dm', 'cm', 'mm']
         combo = ttk.Combobox(row_frame, values=unidades,
@@ -304,9 +304,6 @@ class PhibApp:
         except Exception as e:
             messagebox.showerror("Erro", f"Ocorreu um erro inesperado: {e}")
 
-    # =========================================
-    # SISTEMA DE CONFETES "TRANSPARENTE"
-    # =========================================
     def disparar_confete(self):
         self.bloquear_interface(True)
         chroma_key_color = "#abcdef"
