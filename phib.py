@@ -29,21 +29,15 @@ class PhibApp:
         self.root = root
         self.root.title("Phib - Perímetro")
 
-        # --- AJUSTE DE RESOLUÇÃO (CRÍTICO PARA TELAS PEQUENAS) ---
-        # 800x600 é a resolução "segura" universal.
-        # 1366x768 é o padrão de notebooks 11".
-        # Definimos 900x650 para caber com folga na altura 768 (considerando a barra de tarefas).
         self.root.geometry("900x650")
         self.root.minsize(800, 500)
 
-        # Tenta iniciar maximizado (Melhor experiência)
         try:
             self.root.state('zoomed')
         except:
-            # Em alguns sistemas (Linux/Mac) pode variar, mas no Windows funciona
             pass
 
-        # --- CONFIGURAÇÃO DO ÍCONE (NOVO) ---
+        # --- CONFIGURAÇÃO DO ÍCONE ---
         # Isso garante que o ícone apareça na barra de tarefas e na janela
         try:
             # ID único para a barra de tarefas
@@ -124,9 +118,6 @@ class PhibApp:
         except Exception:
             pass
 
-    # =========================================
-    # LÓGICA DO PERÍMETRO
-    # =========================================
     def setup_tab_perimetro(self):
         # Header
         header_frame = ttk.Frame(self.tab_perimetro)
