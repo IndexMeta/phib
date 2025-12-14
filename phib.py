@@ -30,6 +30,9 @@ class PhibApp:
         self.root.title("Phib - Perímetro")
 
         # --- AJUSTE DE RESOLUÇÃO (CRÍTICO PARA TELAS PEQUENAS) ---
+        # 800x600 é a resolução "segura" universal.
+        # 1366x768 é o padrão de notebooks 11".
+        # Definimos 900x650 para caber com folga na altura 768 (considerando a barra de tarefas).
         self.root.geometry("900x650")
         self.root.minsize(800, 500)
 
@@ -37,13 +40,14 @@ class PhibApp:
         try:
             self.root.state('zoomed')
         except:
+            # Em alguns sistemas (Linux/Mac) pode variar, mas no Windows funciona
             pass
 
         # --- CONFIGURAÇÃO DO ÍCONE (NOVO) ---
         # Isso garante que o ícone apareça na barra de tarefas e na janela
         try:
             # ID único para a barra de tarefas
-            myappid = 'projeto.phib.perimetro.v1'
+            myappid = 'projeto.phib'
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
                 myappid)
 
@@ -128,7 +132,7 @@ class PhibApp:
         header_frame = ttk.Frame(self.tab_perimetro)
         header_frame.pack(side="top", fill='x', padx=10, pady=10)
 
-        ttk.Label(header_frame, text="Encontre seu Perímetro",
+        ttk.Label(header_frame, text= "Encontre o Perímetro",
                   font=("Segoe UI", 14, "bold")).pack()
 
         ttk.Label(header_frame, text="Perímetro é a soma dos comprimentos de todos os lados de uma figura geométrica fechada.",
@@ -345,7 +349,7 @@ class PhibApp:
             texto_formatado = f"{valor_final:.6f}".rstrip('0').rstrip('.')
 
             self.lbl_resultado_perimetro.config(
-                text=f"Perímetro Total = {texto_formatado} {unidade_saida}",
+                text=f"Resultado = {texto_formatado} {unidade_saida}",
                 foreground="#006400"
             )
 
@@ -401,14 +405,15 @@ class PhibApp:
             else:
                 item = self.confetti_canvas.create_rectangle(
                     px, py, px+tamanho, py+tamanho, fill=cor, outline="")
-            velocidade = random.randint(5, 7)
+            # Aumentei a velocidade para 10 a 20 (antes era 5 a 15)
+            velocidade = random.randint(10, 20)
             self.particulas.append({'id': item, 'vel': velocidade})
 
         # 2. Cria Emoji de Palmas Gigante (Animação Extra)
         # Usamos texto unicode. Começa pequeno.
         self.palmas_id = self.confetti_canvas.create_text(
             w/2, h/2,
-            text="👏  👏",
+            text="👏  👏",
             font=("Segoe UI Emoji", 17, "bold"),
             fill="purple"
         )
@@ -433,7 +438,7 @@ class PhibApp:
 
         # Animação das Palmas (Pulsar)
         # Aumenta até o frame 25, depois diminui
-        self.palmas_frame += 1
+        self.palmas_frame += 2  # Aumentei o passo para ser mais rápido (era += 1)
         if self.palmas_frame < 50:
             # Efeito de pulsar: calcula tamanho da fonte baseado no frame
             tamanho_base = 10
@@ -450,7 +455,8 @@ class PhibApp:
             particulas_vivas = True  # Mantém vivo enquanto tiver palmas
 
         if particulas_vivas:
-            self.root.after(20, self.animar_confete)
+            # Diminui o tempo de espera para 10ms (era 20ms) -> mais rápido (100fps)
+            self.root.after(10, self.animar_confete)
         else:
             self.win_confete.destroy()
             del self.win_confete
