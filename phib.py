@@ -123,7 +123,10 @@ class PhibApp:
             cursor="hand2"
         )
         self.btn_calc.pack(pady=5)
-
+        self.root.bind('<Control-Return>',
+                       lambda event: self.calcular_perimetro())
+        self.root.bind('<Alt-F4>', lambda event: self.root.destroy())
+        
         # Scroll area
         scroll_container = ttk.Frame(self.tab_perimetro)
         scroll_container.pack(fill="both", expand=True, padx=20, pady=5)
@@ -154,6 +157,7 @@ class PhibApp:
             bottom_controls, text="+ Adicionar Novo Lado",
             command=lambda: self.add_lado_input(removivel=True)
         )
+        self.root.bind('<Control-=>', lambda event: self.add_lado_input())
         self.btn_add.pack(anchor="center")
 
         # Cria os 3 primeiros lados (NÃO removíveis)
